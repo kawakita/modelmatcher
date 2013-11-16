@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string name="app_name">Model Matcher</string>
+    <string name="capture">Capture Image</string>
+    <string name="name">Tray ID</string>
+    <string name="register_tray">Save Tray ID</string>
+    <string name="unregister_tray">Delete Tray ID</string>
+    <string name="fetch_tray">Fetch Tray</string>
+    <string name="take_image">Match Image</string>
+    <string name="tray_add">Add a new tray ID:</string>
+</resources>

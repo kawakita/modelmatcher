@@ -1,0 +1,10 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="CustomWindowTitleBackground">
+        <item name="android:background">#ffffff</item>
+    </style>
+ 
+    <style name="CustomTheme" parent="android:Theme">
+        <item name="android:windowTitleSize">60dip</item>
+        <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackgroundPlus</item>
+    </style>
+</resources>

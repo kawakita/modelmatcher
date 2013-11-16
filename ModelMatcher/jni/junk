@@ -1,0 +1,107 @@
+	/*const char *needleFilename = env->GetStringUTFChars(path1, 0);
+	const char *haystackFilename = env->GetStringUTFChars(path2, 0);
+	__android_log_print(ANDROID_LOG_DEBUG,"LOG TAG", "needle %s to haystack %s", needleFilename, haystackFilename);
+    // Open the haystack image and find the edges in it
+    std::cout << "Opening " << haystackFilename << std::endl;
+    try
+    {
+        haystackImage = new Image<Rgb>(haystackFilename);
+        Image<Intensity>* tempHaystackImage = new Image<Intensity>(*haystackImage);
+        haystackEdges = new Image<Intensity>(tempHaystackImage->width(), tempHaystackImage->height());
+        cvSmooth(*tempHaystackImage, *tempHaystackImage);
+        cvCanny(*tempHaystackImage, *haystackEdges, 30, 90);
+
+        //cvCopy(*tempHaystackImage, *haystackEdges);
+        cvNot(*haystackEdges, *haystackEdges);
+        haystackEdges->save("/mnt/sdcard/ModelMatcher/milk/haystack.jpg");
+
+
+    }
+    catch (const std::runtime_error&)
+    {
+        std::cerr << "Could not open " << haystackFilename << "." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Create the matchPreviewImage image and display it in a window
+    matchPreviewImage = new Image<Rgb>(haystackEdges->width(), haystackEdges->height());
+    cvCopy(*haystackImage, *matchPreviewImage);
+
+    // Open the needle image (the image to search for in haystack)
+    std::cout << "Opening " << needleFilename << std::endl;
+    try
+    {
+        needleImage = new Image<Rgb>(needleFilename);
+        Image<Intensity>* tempNeedleImage = new Image<Intensity>(*needleImage);
+        needleEdges = new Image<Intensity>(tempNeedleImage->width(), tempNeedleImage->height());
+        cvSmooth(*tempNeedleImage, *tempNeedleImage);
+        cvCanny(*tempNeedleImage, *needleEdges, 30, 90);
+        //cvCopy(*tempNeedleImage, *needleEdges);
+        cvNot(*needleEdges, *needleEdges);
+        needleEdges->save("/mnt/sdcard/ModelMatcher/milk/needle.jpg");
+
+    }
+    catch (const std::runtime_error&)
+    {
+        std::cerr << "Could not open " << needleFilename << "." << std::endl;
+        exit(EXIT_FAILURE);
+    }*/
+    Mat currentTest;
+    vector<Point> contoursQuery1, contoursQuery2, contoursQuery3, contoursTesting;
+    //currentTest=imread("/mnt/sdcard/ModelMatcher/milk/needle.jpg",IMREAD_GRAYSCALE);
+    //currentTest=imread(needleFilename, IMREAD_GRAYSCALE);
+
+    // compute border of the testing //
+    contoursTesting=convertContourType(currentTest,180);
+    Mat currentQuery, flippedHQuery, flippedVQuery;
+    //currentQuery=imread("/mnt/sdcard/ModelMatcher/milk/haystack.jpg", IMREAD_GRAYSCALE);
+    //currentQuery=imread(haystackFilename, IMREAD_GRAYSCALE);
+    //flip(currentQuery, flippedHQuery, 0);
+    //flip(currentQuery, flippedVQuery, 1);
+    // compute border of the query and its flipped versions //
+    //vector<Point> origContour;
+    //contoursQuery1=convertContourType(currentQuery, 180);
+    //origContour=contoursQuery1;
+    contoursQuery2=convertContourType(flippedHQuery,180);
+    contoursQuery3=convertContourType(flippedVQuery,180);
+
+    contoursQuery1=convertContourType(currentQuery, 180);
+    float shapedist = computeShapeDistance(contoursQuery1, contoursQuery2, contoursQuery3, contoursTesting);
+
+    //Ptr <ShapeContextDistanceExtractor> haus = new ShapeContextDistanceExtractorImpl();
+   // return std::min(haus->computeDistance(query1,testq), std::min(haus->computeDistance(query2,testq),haus->computeDistance(query3,testq)));
+/*
+    // Calculate the distance transform of the haystack image
+    haystackDistanceTransform = new Image<Intensity32F>(haystackEdges->width(), haystackEdges->height());
+    cvDistTransform(*haystackEdges, *haystackDistanceTransform, CV_DIST_L1, CV_DIST_MASK_PRECISE, 0);
+
+    // Calculate the distance transform of the needle image
+    needleDistanceTransform = new Image<Intensity32F>(needleEdges->width(), needleEdges->height());
+    cvDistTransform(*needleEdges, *needleDistanceTransform, CV_DIST_L1, CV_DIST_MASK_PRECISE, 0);
+
+    double dist = 1000.0;
+
+	clock_t start = clock();
+	CvPoint bestTranslation;
+	int bestRotation = 0;
+	double bestScale = 1.0;
+    dist = findBestTranslationScaleAndRotation(
+                      &bestTranslation,        // Best translation pointer
+                      &bestRotation,        // Best rotation pointer
+                      &bestScale,                // Best scale pointer
+                      4,        // Initial translation step (in pixels)
+                      0,        // Minimum rotation (in degrees)
+                      0,        // Maximum rotation (in degrees)
+                      1,        // Rotation step (in degrees)
+                      1.0,  // Minimum scale (0, 1]
+                      1.0,        // Maximum scale (0, 1]
+                      1.0        // Scale step
+                  );
+	clock_t finish = clock();
+*/
+    delete needleEdges;
+    delete haystackEdges;
+    delete needleDistanceTransform;
+    delete haystackDistanceTransform;
+    delete matchPreviewImage;
+    delete font;

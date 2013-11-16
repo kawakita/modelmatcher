@@ -1,0 +1,10 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="CustomWindowTitleBackgroundCam">
+        <item name="android:background">#ffffff</item>
+    </style>
+ 
+    <style name="CustomThemeCam" parent="android:Theme">
+        <item name="android:windowTitleSize">60dip</item>
+        <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackgroundCam</item>
+    </style>
+</resources>
